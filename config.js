@@ -1,3 +1,4 @@
+require('dotenv').config();
 module.exports = {
     TOKENS: {
         NOTION: process.env.NOTION_API_KEY
