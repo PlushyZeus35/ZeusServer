@@ -4,9 +4,8 @@ const Auth = require('../helpers/auth')
 const Notion = require('../helpers/notion')
 const CONSTANTS = require('../constants')
 
-router.get('/token',async (req, res) => {
-    const username = req.query.username;
-    const password = req.query.password;
+router.post('/token',async (req, res) => {
+    const {username, password} = req.body;
     res.json(await Auth.validateUserLogin(username, password));
     Notion.createRequestLog(req.ip, CONSTANTS.SERVICES.AUTHENTICATION, username);
 })

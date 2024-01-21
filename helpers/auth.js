@@ -14,7 +14,7 @@ function validateHash (hashed, toValidate) {
 
 Auth.validateUserLogin = async (username, password) => {
     const notionUser = await Notion.retrieveUserByUsername(username);
-    if(notionUser.length > 0){
+    if(notionUser.length > 0 && password){
         let targetUser = notionUser[0];
         if(validateHash(targetUser.password, password)){
             const token = JWT.signToken(targetUser.getUserObject());
