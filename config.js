@@ -12,5 +12,8 @@ module.exports = {
         SECRET: process.env.JWT_SECRET,
         ALGORITHM: process.env.JWT_ALG,
         EXPIRATION: process.env.JWT_EXPIRATION,
+    },
+    FILES: {
+        MAX_SIZE: 50
     }
 }

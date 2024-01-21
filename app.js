@@ -20,7 +20,7 @@ app.set('trust proxy', true);
 // ROUTES
 app.use(require('./routes'));
 app.use(require('./routes/index'));
-app.use('/auth', require('./routes/auth'))
-
+app.use('/auth', require('./routes/auth'));
+app.use('/finance', require('./routes/finance'));
 
 module.exports = app;
