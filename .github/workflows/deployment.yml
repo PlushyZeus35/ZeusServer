@@ -8,12 +8,12 @@ on:
 jobs:
   my_first_job:
     name: My first job
-    runs-on: [self-hosted, "${{ inputs.chosen-os }}"]
+    runs-on: [ubuntu-latest]
     steps:
       - run: echo Hello world!
   my_second_job:
     name: My second job
     needs: [my_first_job]
-    runs-on: [self-hosted, "${{ inputs.chosen-os }}"]
+    runs-on: [ubuntu-latest]
     steps:
       - run: echo Second Hello world!
