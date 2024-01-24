@@ -2,6 +2,7 @@ var express = require('express');
 const multer = require('multer');
 const Finance = require('../helpers/finance');
 const CONFIG = require('../config');
+const Auth = require('../helpers/auth')
 var router = express.Router();
 
 const storage = multer.memoryStorage();
@@ -27,6 +28,11 @@ router.post('/generate', upload.single('file'), async (req, res) => {
         res.json(Finance.processFinanceFile(req.file));
     }
     res.json({status: 400, error: 'Not file attached.'})
+});
+
+router.post('/create', Auth.validateTokenMiddleware ,async(req, res) => {
+    const createdRecords = await Finance.createFinanceRecords(req.body);
+    res.json({status: true, records: createdRecords})
 })
 
 module.exports = router;

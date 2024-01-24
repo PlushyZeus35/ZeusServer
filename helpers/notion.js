@@ -137,4 +137,15 @@ Notion.createUser = async (username, password, email, tags) => {
 	return new User(userCreated.id, username, password, email, tags.length>0 ? tags : ['Standard'], userCreated.properties['in period'].formula.number, userCreated.properties['requests limit'].formula.number)
 }
 
+Notion.createFinanceRecord = async (financeObject) =>{
+	const userCreated = await notion.pages.create({
+		parent: {
+			type: "database_id",
+			database_id: CONFIG.NOTION_DATABASES.FINANCE
+		},
+		properties: financeObject.notionProperties
+	})
+	return userCreated;
+}
+
 module.exports = Notion;

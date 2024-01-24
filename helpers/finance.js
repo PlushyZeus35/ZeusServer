@@ -1,7 +1,9 @@
-const Finance = {}
+const FinanceHelper = {}
 const xlsx = require('xlsx');
+const Finance = require('../models/finance');
+const Notion = require('../helpers/notion');
 
-Finance.processFinanceFile = (financeFile) => {
+FinanceHelper.processFinanceFile = (financeFile) => {
     // Read xls from req buffer (imported with multer)
     const workbook = xlsx.read(financeFile.buffer, { type: 'buffer' });
 
@@ -19,4 +21,22 @@ Finance.processFinanceFile = (financeFile) => {
     return records;
 }
 
-module.exports = Finance;
+FinanceHelper.createFinanceRecords = async (financeRecords) => {
+    const createdRecords = [];
+    if(!Array.isArray(financeRecords)){
+        return createdRecords;
+    }
+    
+    for(let fRec of financeRecords){
+        const financeRecord = new Finance(null, fRec.concept, fRec.amount, fRec.date, fRec.type, fRec.categories, fRec.shop);
+        if(financeRecord.hasValidProperties()){
+            createdRecords.push(await Notion.createFinanceRecord(financeRecord));
+        }else{
+            createdRecords.push(financeRecord.properties)
+        }
+    }
+
+    return createdRecords;
+}
+
+module.exports = FinanceHelper;

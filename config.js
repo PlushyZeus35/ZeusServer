@@ -5,7 +5,8 @@ module.exports = {
     },
     NOTION_DATABASES: {
         USERS: process.env.NOTION_USERS_DBID,
-        REQUESTS: process.env.NOTION_REQUESTS_DBID
+        REQUESTS: process.env.NOTION_REQUESTS_DBID,
+        FINANCE: process.env.NOTION_FINANCE_DBID
     },
     ENVIRONMENT: process.env.ZEUS_SERVER_ENV,
     JWT: {

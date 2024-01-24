@@ -1,5 +1,6 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
+const bodyParser = require('body-parser');
 
 // INITIALIZATIONS
 const app = express();
@@ -8,6 +9,15 @@ const app = express();
 // SETTINGS
 // Set static path to serve static files
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// Error-handling middleware
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        return res.status(400).send({ status: false, error: 'Bad JSON' }); // Bad JSON
+    }
+    next();
+});
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.set('trust proxy', true);
 
